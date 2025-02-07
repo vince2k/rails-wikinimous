@@ -1,0 +1,40 @@
+<%= form_with(model: @article, local: true) do |form| %>
+  <div class="mb-3">
+    <%= form.label :title, "Title" %>
+    <%= form.text_field :title, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :content, "Content" %>
+    <div id="editor" style="height: 300px;"></div>
+    <%= form.hidden_field :content, id: "hidden_content" %>
+  </div>
+
+  <%= form.submit "Send", class: "btn btn-primary mb-3" %>
+<% end %>
+
+<%= link_to "Back", articles_path, style:"font-size:16px" %>
+
+<!-- Ace Editor -->
+
+<script>
+  document.addEventListener("turbo:load", function () {
+  var editor = ace.edit("editor");
+  editor.setTheme("ace/theme/github"); // Thème clair
+  editor.session.setMode("ace/mode/markdown"); // Mode Markdown
+  editor.setOption("minLines", 10);
+  editor.setOption("maxLines", 30);
+
+  var hiddenField = document.getElementById("hidden_content");
+
+  // Charger le contenu existant dans l'éditeur si présent
+  if (hiddenField.value) {
+    editor.setValue(hiddenField.value, -1); // -1 pour éviter un historique de modification
+  }
+
+  // Mettre à jour le champ caché avant la soumission du formulaire
+  document.querySelector("form").addEventListener("submit", function () {
+    hiddenField.value = editor.getValue();
+  });
+});
+</script>

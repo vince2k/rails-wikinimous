@@ -1,9 +1,30 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+def generate_article
+  paragraphs = []
+
+  # Premier paragraphe
+  paragraphs << Faker::Lorem.sentence(word_count: 5)
+
+  # Deuxième bloc avec titre HTML
+  paragraphs << "<h3>#{Faker::Marketing.buzzwords.capitalize}</h3>"
+  3.times { paragraphs << Faker::Lorem.sentence(word_count: 5) }
+
+  # Troisième bloc avec sous-titre HTML
+  paragraphs << "<h3>#{Faker::Marketing.buzzwords.capitalize}</h3>"
+  4.times { paragraphs << Faker::Lorem.sentence(word_count: 7) }
+
+  # Quatrième bloc avec titre HTML
+  paragraphs << "<h3>#{Faker::Company.buzzword.capitalize}</h3>"
+  5.times { paragraphs << Faker::Lorem.sentence(word_count: 6)}
+
+  paragraphs.join("\n")
+end
+
+# Supprime les anciens articles pour éviter les doublons
+Article.destroy_all
+
+10.times do
+  Article.create(
+    title: Faker::Marketing.buzzwords.capitalize,
+    content: generate_article
+  )
+end

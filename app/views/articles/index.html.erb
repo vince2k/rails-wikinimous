@@ -1,0 +1,7 @@
+  <% @articles.each do |article|%>
+    <article>
+      <h2><%= link_to article.title, article_path(article) %></h2>
+      <p class="text-truncate-multiline">
+        <%= truncate(strip_tags(article.content), length: 150).html_safe %>
+      </p>    </article>
+  <% end %>
