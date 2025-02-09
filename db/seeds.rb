@@ -8,7 +8,7 @@ def generate_article
   paragraphs << "<h3>#{Faker::Marketing.buzzwords.capitalize}</h3>"
   3.times { paragraphs << Faker::Lorem.sentence(word_count: 5) }
 
-  # Troisième bloc avec sous-titre HTML
+  # Troisième bloc avec titre HTML
   paragraphs << "<h3>#{Faker::Marketing.buzzwords.capitalize}</h3>"
   4.times { paragraphs << Faker::Lorem.sentence(word_count: 7) }
 
